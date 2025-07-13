@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Malla Curricular Obstetricia</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    max-width: 900px;
+    margin: 20px auto;
+    background: #f5f5f5;
+    padding: 20px;
+    color: #333;
+  }
+  h1, h2 {
+    text-align: center;
+  }
+  .semestre {
+    background: white;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 15px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+  .ramo {
+    cursor: pointer;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+  }
+  .ramo:hover {
+    background-color: #eef;
+  }
+  .detalles {
+    padding: 8px 16px;
+    font-size: 0.9em;
+    color: #555;
+    display: none;
+    background: #f9f9f9;
+    border-left: 3px solid #007ACC;
+  }
+</style>
+</head>
+<body>
+
+<h1>Malla Curricular - Obstetricia</h1>
+
+<div id="malla-container">
+
+</div>
+
+<script>
+const malla = [
+  {
+    semestre: 1,
+    ramos: [
+      {nombre: "Inglés General", prereq: "Ninguno"},
+      {nombre: "Biología Celular", prereq: "Ninguno"},
+      {nombre: "Anatomía Humana", prereq: "Ninguno"},
+      {nombre: "Química General y Orgánica", prereq: "Ninguno"},
+      {nombre: "Fundamentos de la Matronería", prereq: "Ninguno"},
+    ]
+  },
+  {
+    semestre: 2,
+    ramos: [
+      {nombre: "Estrategias para el Aprendizaje", prereq: "Ninguno"},
+      {nombre: "Fisiología Humana", prereq: "Biología Celular, Anatomía Humana"},
+      {nombre: "Histoembriología", prereq: "Biología Celular"},
+      {nombre: "Bioquímica General", prereq: "Biología Celular, Química General y Orgánica"},
+      {nombre: "Antropología", prereq: "Ninguno"},
+      {nombre: "Fundamentos de la Salud Sexual y Reproductiva", prereq: "Fundamentos de la Matronería"},
+      {nombre: "Psicología del Curso de la Vida", prereq: "Ninguno"},
+      {nombre: "Atención en Salud Basada en Evidencia Científica", prereq: "Inglés General"},
+    ]
+  },
+  {
+    semestre: 3,
+    ramos: [
+      {nombre: "Ética", prereq: "Antropología"},
+      {nombre: "Embriología y Genética", prereq: "Histoembriología"},
+      {nombre: "Microbiología General", prereq: "Biología Celular"},
+      {nombre: "Farmacología General", prereq: "Fisiología Humana, Bioquímica General"},
+      {nombre: "Farmacología Aplicada", prereq: "Fisiología Humana, Bioquímica General"},
+      {nombre: "Anatomía Aplicada", prereq: "Anatomía Humana"},
+      {nombre: "Género y Salud", prereq: "Antropología, Fundamentos de la Salud Sexual y Reproductiva"},
+      {nombre: "Salud Pública I", prereq: "Ninguno"},
+    ]
+  },
+  {
+    semestre: 4,
+    ramos: [
+      {nombre: "PAE I", prereq: "Anatomía Humana, Fisiología Humana, Microbiología General"},
+      {nombre: "Obstetricia I", prereq: "Bioquímica General, Embriología y Genética, Anatomía Aplicada"},
+      {nombre: "Neonatología I", prereq: "Bioquímica General, Embriología y Genética, Fisiología Humana"},
+      {nombre: "Ginecología I", prereq: "Bioquímica General, Embriología y Genética, Fisiología Humana"},
+      {nombre: "Sexología I", prereq: "Psicología del Curso de la Vida, Género y Salud"},
+      {nombre: "Promoción de la Salud", prereq: "Antropología, Psicología del Curso de la Vida, Género y Salud"},
+      {nombre: "Fisiopatología", prereq: "Fisiología Humana"},
+    ]
+  },
+  {
+    semestre: 5,
+    ramos: [
+      {nombre: "Electivo de Formación Integral", prereq: "Ética"},
+      {nombre: "Obstetricia II", prereq: "Obstetricia I, Fisiopatología"},
+      {nombre: "Neonatología II", prereq: "Neonatología I, Fisiopatología"},
+      {nombre: "Ginecología II", prereq: "Ginecología I, Fisiopatología"},
+      {nombre: "PAE II", prereq: "PAE I, Obstetricia I, Ginecología I, Neonatología I"},
+      {nombre: "Salud Familiar", prereq: "Género y Salud, Promoción de la Salud"},
+      {nombre: "Salud Pública II", prereq: "Salud Pública I"},
+      {nombre: "Farmacología Perinatal y Ginecológica", prereq: "Farmacología General, Farmacología Aplicada"},
+    ]
+  },
+  {
+    semestre: 6,
+    ramos: [
+      {nombre: "Integrado Urgencia Ginecológica, Obstétrica y Neonatal", prereq: "PAE II, Farmacología Perinatal y Ginecológica"},
+      {nombre: "Preclínico Perinatal", prereq: "Obstetricia II, Neonatología II"},
+      {nombre: "Regulación de la Fecundidad", prereq: "Género y Salud, Ginecología II, Farmacología Perinatal y Ginecológica"},
+      {nombre: "Sexología II", prereq: "Sexología I"},
+      {nombre: "Educación para la Salud", prereq: "Género y Salud, Salud Familiar"},
+      {nombre: "Epidemiología para la Gestión", prereq: "Salud Pública II"},
+      {nombre: "Introducción a la Biomedicina", prereq: "Ética, Fisiopatología, Atención en Salud Basada en Evidencia Científica"},
+    ]
+  },
+  {
+    semestre: 7,
+    ramos: [
+      {nombre: "Electivo I", prereq: "Ninguno"},
+      {nombre: "Preclínico de Atención Primaria", prereq: "Preclínico Perinatal, Regulación de la Fecundidad"},
+      {nombre: "Clínico Perinatal I", prereq: "Preclínico Perinatal"},
+      {nombre: "Consejería en Salud Sexual y Reproductiva", prereq: "Género y Salud, Educación para la Salud"},
+      {nombre: "Investigación Científica", prereq: "Introducción a la Biomedicina"},
+      {nombre: "Bioética", prereq: "Ética"},
+      {nombre: "Gestión en Salud", prereq: "Epidemiología para la Gestión"},
+    ]
+  },
+  {
+    semestre: 8,
+    ramos: [
+      {nombre: "Clínico de Atención Primaria", prereq: "Preclínico de Atención Primaria, Sexología II, Habilidades para la Vida Profesional"},
+      {nombre: "Clínico Perinatal II", prereq: "Clínico Perinatal I, Habilidades para la Vida Profesional"},
+      {nombre: "Clínico Morbilidad Ginecológica", prereq: "Integrado Urgencia Ginecológica, Obstétrica y Neonatal, Ginecología II, Habilidades para la Vida Profesional"},
+      {nombre: "Medicina Legal y Matronería", prereq: "Consejería en Salud Sexual y Reproductiva, Bioética"},
+      {nombre: "Seminario de Investigación", prereq: "Aprobado hasta 7º semestre"},
+      {nombre: "Marketing Social en Salud", prereq: "Educación para la Salud, Gestión en Salud"},
+      {nombre: "Integrado Clínico I", prereq: "Clínico Perinatal II, Clínico Morbilidad Ginecológica, Clínico de Atención Primaria"},
+      {nombre: "Habilidades para la Vida Profesional", prereq: "Bioética"},
+    ]
+  },
+  {
+    semestre: 9,
+    ramos: [
+      {nombre: "Electivo II", prereq: "Aprobado hasta 8º semestre"},
+      {nombre: "Clínico de Oncología Ginecológica", prereq: "Aprobado hasta 8º semestre"},
+      {nombre: "Clínico de Control Sexual y Consejería", prereq: "Aprobado hasta 8º semestre"},
+      {nombre: "Clínico de Morbilidad Neonatal", prereq: "Aprobado hasta 8º semestre"},
+      {nombre: "Clínico de Salud Sexual y Reproductiva Infanto-Juvenil", prereq: "Aprobado hasta 8º semestre"},
+      {nombre: "Clínico de Gestión en Matronería", prereq: "Aprobado hasta 8º semestre"},
+      {nombre: "Integrado Clínico II", prereq: "Aprobado hasta 8º semestre"},
+    ]
+  },
+  {
+    semestre: 10,
+    ramos: [
+      {nombre: "Clínico Intrahospitalario y Extrahospitalario", prereq: "Aprobado hasta 8º semestre"},
+    ]
+  }
+];
+
+function construirMalla() {
+  const contenedor = document.getElementById('malla-container');
+  malla.forEach(sem => {
+    const divSemestre = document.createElement('div');
+    divSemestre.className = 'semestre';
+    const h2 = document.createElement('h2');
+    h2.textContent = `Semestre ${sem.semestre}`;
+    divSemestre.appendChild(h2);
+
+    sem.ramos.forEach(ramo => {
+      const divRamo = document.createElement('div');
+      divRamo.className = 'ramo';
+      divRamo.textContent = ramo.nombre;
+
+      const detalles = document.createElement('div');
+      detalles.className = 'detalles';
+      detalles.textContent = `Prerrequisitos: ${ramo.prereq}`;
+
+      divRamo.addEventListener('click', () => {
+        detalles.style.display = detalles.style.display === 'block' ? 'none' : 'block';
+      });
+
+      divSemestre.appendChild(divRamo);
+      divSemestre.appendChild(detalles);
+    });
+
+    contenedor.appendChild(divSemestre);
+  });
+}
+
+construirMalla();
+</script>
+
+</body>
+</html>
