@@ -12,19 +12,16 @@
       color: #fff;
       padding: 1rem;
     }
-
     h1 {
       text-align: center;
       color: #f48fb1;
       margin-bottom: 1rem;
     }
-
     #malla-container {
       display: flex;
       overflow-x: auto;
       gap: 10px;
     }
-
     .semestre {
       background: #f3e6ff;
       color: #5a2a82;
@@ -33,14 +30,12 @@
       min-width: 220px;
       flex-shrink: 0;
     }
-
     .semestre h2 {
       text-align: center;
       margin-top: 0;
       margin-bottom: 10px;
       font-size: 1.1rem;
     }
-
     .ramo {
       background-color: #ffffff;
       padding: 6px 8px;
@@ -51,11 +46,9 @@
       user-select: none;
       transition: all 0.2s ease;
     }
-
     .ramo.desbloqueado {
       background-color: #f8bbd0;
     }
-
     .ramo.tachado {
       text-decoration: line-through;
       background-color: #d58ba8 !important;
@@ -70,23 +63,91 @@
   <script>
     const malla = [
       { semestre: 1, ramos: [
-          { nombre: "Inglés General", prereq: [] },
-          { nombre: "Biología Celular", prereq: [] },
-          { nombre: "Anatomía Humana", prereq: [] },
-          { nombre: "Química General y Orgánica", prereq: [] },
-          { nombre: "Fundamentos de la Matronería", prereq: [] },
-        ]},
+        { nombre: "Inglés General", prereq: [] },
+        { nombre: "Biología Celular", prereq: [] },
+        { nombre: "Anatomía Humana", prereq: [] },
+        { nombre: "Química General y Orgánica", prereq: [] },
+        { nombre: "Fundamentos de la Matronería", prereq: [] },
+      ]},
       { semestre: 2, ramos: [
-          { nombre: "Fisiología Humana", prereq: ["Biología Celular", "Anatomía Humana"] },
-          { nombre: "Histoembriología", prereq: ["Biología Celular"] },
-          { nombre: "Bioquímica General", prereq: ["Biología Celular", "Química General y Orgánica"] },
-          { nombre: "Fundamentos de la Salud Sexual y Reproductiva", prereq: ["Fundamentos de la Matronería"] },
-        ]},
+        { nombre: "Estrategias para el Aprendizaje", prereq: [] },
+        { nombre: "Fisiología Humana", prereq: ["Biología Celular", "Anatomía Humana"] },
+        { nombre: "Histoembriología", prereq: ["Biología Celular"] },
+        { nombre: "Bioquímica General", prereq: ["Biología Celular", "Química General y Orgánica"] },
+        { nombre: "Antropología", prereq: [] },
+        { nombre: "Fundamentos de la Salud Sexual y Reproductiva", prereq: ["Fundamentos de la Matronería"] },
+        { nombre: "Psicología del Curso de la Vida", prereq: [] },
+        { nombre: "Atención en Salud Basada en Evidencia Científica", prereq: ["Inglés General"] },
+      ]},
       { semestre: 3, ramos: [
-          { nombre: "Ética", prereq: ["Inglés General"] },
-          { nombre: "Microbiología", prereq: ["Biología Celular"] },
-        ]}
-      // Puedes seguir agregando semestres aquí...
+        { nombre: "Ética", prereq: ["Antropología"] },
+        { nombre: "Embriología y Genética", prereq: ["Histoembriología"] },
+        { nombre: "Microbiología General", prereq: ["Biología Celular"] },
+        { nombre: "Farmacología General", prereq: ["Fisiología Humana", "Bioquímica General"] },
+        { nombre: "Farmacología Aplicada", prereq: ["Fisiología Humana", "Bioquímica General"] },
+        { nombre: "Anatomía Aplicada", prereq: ["Anatomía Humana"] },
+        { nombre: "Género y Salud", prereq: ["Antropología", "Fundamentos de la Salud Sexual y Reproductiva"] },
+        { nombre: "Salud Pública I", prereq: [] },
+      ]},
+      { semestre: 4, ramos: [
+        { nombre: "PAE I", prereq: ["Anatomía Humana", "Fisiología Humana", "Microbiología General"] },
+        { nombre: "Obstetricia I", prereq: ["Bioquímica General", "Embriología y Genética", "Anatomía Aplicada"] },
+        { nombre: "Neonatología I", prereq: ["Bioquímica General", "Embriología y Genética", "Fisiología Humana"] },
+        { nombre: "Ginecología I", prereq: ["Bioquímica General", "Embriología y Genética", "Fisiología Humana"] },
+        { nombre: "Sexología I", prereq: ["Psicología del Curso de la Vida", "Género y Salud"] },
+        { nombre: "Promoción de la Salud", prereq: ["Antropología", "Psicología del Curso de la Vida", "Género y Salud"] },
+        { nombre: "Fisiopatología", prereq: ["Fisiología Humana"] },
+      ]},
+      { semestre: 5, ramos: [
+        { nombre: "Electivo Formación Integral", prereq: ["Ética"] },
+        { nombre: "Obstetricia II", prereq: ["Obstetricia I", "Fisiopatología"] },
+        { nombre: "Neonatología II", prereq: ["Neonatología I", "Fisiopatología"] },
+        { nombre: "Ginecología II", prereq: ["Ginecología I", "Fisiopatología"] },
+        { nombre: "PAE II", prereq: ["PAE I", "Obstetricia I", "Ginecología I", "Neonatología I"] },
+        { nombre: "Salud Familiar", prereq: ["Género y Salud", "Promoción de la Salud"] },
+        { nombre: "Salud Pública II", prereq: ["Salud Pública I"] },
+        { nombre: "Farmacología Perinatal y Ginecológica", prereq: ["Farmacología General", "Farmacología Aplicada"] },
+      ]},
+      { semestre: 6, ramos: [
+        { nombre: "Integrado Urgencia Ginecológica, Obstétrica y Neonatal", prereq: ["PAE II", "Farmacología Perinatal y Ginecológica"] },
+        { nombre: "Preclínico Perinatal", prereq: ["Obstetricia II", "Neonatología II"] },
+        { nombre: "Regulación de la Fecundidad", prereq: ["Género y Salud", "Ginecología II", "Farmacología Perinatal y Ginecológica"] },
+        { nombre: "Sexología II", prereq: ["Sexología I"] },
+        { nombre: "Educación para la Salud", prereq: ["Género y Salud", "Salud Familiar"] },
+        { nombre: "Epidemiología para la Gestión", prereq: ["Salud Pública II"] },
+        { nombre: "Introducción a la Biomedicina", prereq: ["Ética", "Fisiopatología", "Atención en Salud Basada en Evidencia Científica"] },
+      ]},
+      { semestre: 7, ramos: [
+        { nombre: "Electivo I", prereq: [] },
+        { nombre: "Preclínico de Atención Primaria", prereq: ["Preclínico Perinatal", "Regulación de la Fecundidad"] },
+        { nombre: "Clínico Perinatal I", prereq: ["Preclínico Perinatal"] },
+        { nombre: "Consejería en Salud Sexual y Reproductiva", prereq: ["Género y Salud", "Educación para la Salud"] },
+        { nombre: "Investigación Científica", prereq: ["Introducción a la Biomedicina"] },
+        { nombre: "Bioética", prereq: ["Ética"] },
+        { nombre: "Gestión en Salud", prereq: ["Epidemiología para la Gestión"] },
+      ]},
+      { semestre: 8, ramos: [
+        { nombre: "Clínico de Atención Primaria", prereq: ["Preclínico de Atención Primaria", "Sexología II", "Habilidades para la Vida Profesional"] },
+        { nombre: "Clínico Perinatal II", prereq: ["Clínico Perinatal I", "Habilidades para la Vida Profesional"] },
+        { nombre: "Clínico Morbilidad Ginecológica", prereq: ["Integrado Urgencia Ginecológica, Obstétrica y Neonatal", "Ginecología II", "Habilidades para la Vida Profesional"] },
+        { nombre: "Medicina Legal y Matronería", prereq: ["Consejería en Salud Sexual y Reproductiva", "Bioética"] },
+        { nombre: "Seminario de Investigación", prereq: [] },
+        { nombre: "Marketing Social en Salud", prereq: ["Educación para la Salud", "Gestión en Salud"] },
+        { nombre: "Integrado Clínico I", prereq: ["Clínico Perinatal II", "Clínico Morbilidad Ginecológica", "Clínico de Atención Primaria"] },
+        { nombre: "Habilidades para la Vida Profesional", prereq: ["Bioética"] },
+      ]},
+      { semestre: 9, ramos: [
+        { nombre: "Electivo II", prereq: [] },
+        { nombre: "Clínico de Oncología Ginecológica", prereq: [] },
+        { nombre: "Clínico de Control Sexual y Consejería", prereq: [] },
+        { nombre: "Clínico de Morbilidad Neonatal", prereq: [] },
+        { nombre: "Clínico de Salud Sexual y Reproductiva Infanto-Juvenil", prereq: [] },
+        { nombre: "Clínico de Gestión en Matronería", prereq: [] },
+        { nombre: "Integrado Clínico II", prereq: [] },
+      ]},
+      { semestre: 10, ramos: [
+        { nombre: "Clínico Intrahospitalario y Extrahospitalario", prereq: [] },
+      ]}
     ];
 
     const STORAGE_KEY = 'malla_aprobados';
@@ -126,7 +187,7 @@
             divRamo.classList.add("desbloqueado");
           }
 
-          if (desbloqueado) {
+          if (desbloqueado || aprobado) {
             divRamo.addEventListener("click", () => {
               if (!aprobados.has(ramo.nombre)) {
                 aprobados.add(ramo.nombre);
@@ -148,6 +209,4 @@
     renderMalla();
   </script>
 </body>
-</html>
-
 </html>
