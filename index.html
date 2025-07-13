@@ -48,14 +48,13 @@
     color: #720026; /* morado oscuro para títulos de semestre */
   }
   .ramo {
+    font-size: 14px;          /* texto más pequeño */
+    padding: 8px 12px;        /* menos espacio interno */
+    border-bottom: 1px solid #e8d7f1;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    padding: 12px 16px;
-    border-bottom: 1px solid #e8d7f1;
-    user-select: none;
     border-radius: 8px;
-    background: #f8bbd0; /* rosado suave para ramos desbloqueados */
+    background: #f8bbd0;       /* rosado suave para ramos desbloqueados */
     transition: background-color 0.3s ease;
   }
   .ramo.bloqueado {
@@ -63,7 +62,7 @@
     opacity: 1;
   }
   .nombre-prereq {
-    margin-left: 10px;
+    margin-left: 8px;
     font-weight: 600;
     cursor: pointer;
   }
