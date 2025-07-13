@@ -3,162 +3,151 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Malla Curricular Interactiva - Obstetricia</title>
-
+  <title>Malla Interactiva - Obstetricia</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
-
   <style>
     body {
       font-family: 'Poppins', sans-serif;
       background: #5a2a82;
-      color: #f3e6ff;
-      max-width: 95vw;
-      margin: 15px auto;
-      padding: 15px;
+      color: #fff;
+      padding: 1rem;
     }
+
     h1 {
       text-align: center;
-      font-weight: 700;
       color: #f48fb1;
-      margin-bottom: 20px;
-      font-size: 1.8rem;
+      margin-bottom: 1rem;
     }
+
     #malla-container {
       display: flex;
-      gap: 10px;
       overflow-x: auto;
-      padding-bottom: 10px;
-      scroll-behavior: smooth;
-      height: 90vh;
-      align-items: flex-start;
+      gap: 10px;
     }
+
     .semestre {
-      flex: 0 0 230px;
-      max-height: 100%;
-      overflow-y: auto;
       background: #f3e6ff;
-      border-radius: 10px;
-      padding: 12px 15px;
-      box-shadow: 0 3px 8px rgba(180, 100, 140, 0.4);
       color: #5a2a82;
+      padding: 10px;
+      border-radius: 8px;
+      min-width: 220px;
+      flex-shrink: 0;
     }
+
     .semestre h2 {
       text-align: center;
       margin-top: 0;
       margin-bottom: 10px;
-      color: #720026;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
     }
+
     .ramo {
+      background-color: #ffffff;
+      padding: 6px 8px;
+      margin-bottom: 6px;
+      border-radius: 5px;
       font-size: 12px;
-      padding: 5px 8px;
-      border-bottom: 1px solid #e8d7f1;
-      border-radius: 6px;
-      background: #f8bbd0;
-      margin-bottom: 4px;
-      font-weight: 600;
-      color: #5a2a82;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.2s ease;
     }
-    .ramo.bloqueado {
-      background: white;
-      opacity: 1;
+
+    .ramo.desbloqueado {
+      background-color: #f8bbd0;
     }
+
     .ramo.tachado {
       text-decoration: line-through;
-      background: #d58ba8;
+      background-color: #d58ba8 !important;
       color: #7a2650;
     }
   </style>
 </head>
 <body>
+  <h1>Malla Curricular - Obstetricia</h1>
+  <div id="malla-container"></div>
 
-<h1>Malla Curricular Interactiva - Obstetricia</h1>
-<div id="malla-container"></div>
+  <script>
+    const malla = [
+      { semestre: 1, ramos: [
+          { nombre: "Inglés General", prereq: [] },
+          { nombre: "Biología Celular", prereq: [] },
+          { nombre: "Anatomía Humana", prereq: [] },
+          { nombre: "Química General y Orgánica", prereq: [] },
+          { nombre: "Fundamentos de la Matronería", prereq: [] },
+        ]},
+      { semestre: 2, ramos: [
+          { nombre: "Fisiología Humana", prereq: ["Biología Celular", "Anatomía Humana"] },
+          { nombre: "Histoembriología", prereq: ["Biología Celular"] },
+          { nombre: "Bioquímica General", prereq: ["Biología Celular", "Química General y Orgánica"] },
+          { nombre: "Fundamentos de la Salud Sexual y Reproductiva", prereq: ["Fundamentos de la Matronería"] },
+        ]},
+      { semestre: 3, ramos: [
+          { nombre: "Ética", prereq: ["Inglés General"] },
+          { nombre: "Microbiología", prereq: ["Biología Celular"] },
+        ]}
+      // Puedes seguir agregando semestres aquí...
+    ];
 
-<script>
-const malla = [
-  { semestre: 1, ramos: [
-      {nombre: "Inglés General", prereq: []},
-      {nombre: "Biología Celular", prereq: []},
-      {nombre: "Anatomía Humana", prereq: []},
-      {nombre: "Química General y Orgánica", prereq: []},
-      {nombre: "Fundamentos de la Matronería", prereq: []},
-    ]},
-  { semestre: 2, ramos: [
-      {nombre: "Estrategias para el Aprendizaje", prereq: []},
-      {nombre: "Fisiología Humana", prereq: ["Biología Celular","Anatomía Humana"]},
-      {nombre: "Histoembriología", prereq: ["Biología Celular"]},
-      {nombre: "Bioquímica General", prereq: ["Biología Celular","Química General y Orgánica"]},
-      {nombre: "Antropología", prereq: []},
-      {nombre: "Fundamentos de la Salud Sexual y Reproductiva", prereq: ["Fundamentos de la Matronería"]},
-      {nombre: "Psicología del Curso de la Vida", prereq: []},
-      {nombre: "Atención en Salud Basada en Evidencia Científica", prereq: ["Inglés General"]},
-    ]},
-  { semestre: 3, ramos: [
-      {nombre: "Ética", prereq: ["Antropología"]},
-      {nombre: "Embriología y Genética", prereq: ["Histoembriología"]},
-      {nombre: "Microbiología General", prereq: ["Biología Celular"]},
-      {nombre: "Farmacología General", prereq: ["Fisiología Humana","Bioquímica General"]},
-      {nombre: "Farmacología Aplicada", prereq: ["Fisiología Humana","Bioquímica General"]},
-      {nombre: "Anatomía Aplicada", prereq: ["Anatomía Humana"]},
-      {nombre: "Género y Salud", prereq: ["Antropología","Fundamentos de la Salud Sexual y Reproductiva"]},
-      {nombre: "Salud Pública I", prereq: []},
-    ]},
-  // Agrega aquí los demás semestres igual como antes...
-];
+    const STORAGE_KEY = 'malla_aprobados';
+    let aprobados = new Set(JSON.parse(localStorage.getItem(STORAGE_KEY)) || []);
 
-let aprobados = new Set();
+    function guardar() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify([...aprobados]));
+    }
 
-function renderMalla() {
-  const contenedor = document.getElementById('malla-container');
-  contenedor.innerHTML = "";
+    function prerrequisitosAprobados(ramo) {
+      return ramo.prereq.every(p => aprobados.has(p));
+    }
 
-  // Mapa rápido para verificar si ya fue "aprobado"
-  const aprobadosTemp = new Set();
+    function renderMalla() {
+      const contenedor = document.getElementById("malla-container");
+      contenedor.innerHTML = "";
 
-  malla.forEach(sem => {
-    const col = document.createElement("div");
-    col.className = "semestre";
+      malla.forEach(sem => {
+        const divSem = document.createElement("div");
+        divSem.className = "semestre";
 
-    const h2 = document.createElement("h2");
-    h2.textContent = `Semestre ${sem.semestre}`;
-    col.appendChild(h2);
+        const h2 = document.createElement("h2");
+        h2.textContent = `Semestre ${sem.semestre}`;
+        divSem.appendChild(h2);
 
-    sem.ramos.forEach(ramo => {
-      const div = document.createElement("div");
-      div.className = "ramo";
+        sem.ramos.forEach(ramo => {
+          const divRamo = document.createElement("div");
+          divRamo.className = "ramo";
+          divRamo.textContent = ramo.nombre;
 
-      const requisitosCumplidos = ramo.prereq.every(pr => aprobados.has(pr));
+          const aprobado = aprobados.has(ramo.nombre);
+          const desbloqueado = prerrequisitosAprobados(ramo);
 
-      if (requisitosCumplidos) {
-        div.classList.add("tachado");
-        aprobadosTemp.add(ramo.nombre);
-      } else {
-        div.classList.add("bloqueado");
-      }
+          if (aprobado) {
+            divRamo.classList.add("tachado");
+          } else if (desbloqueado) {
+            divRamo.classList.add("desbloqueado");
+          }
 
-      div.textContent = ramo.nombre;
-      col.appendChild(div);
-    });
+          if (desbloqueado) {
+            divRamo.addEventListener("click", () => {
+              if (!aprobados.has(ramo.nombre)) {
+                aprobados.add(ramo.nombre);
+              } else {
+                aprobados.delete(ramo.nombre);
+              }
+              guardar();
+              renderMalla();
+            });
+          }
 
-    contenedor.appendChild(col);
-  });
+          divSem.appendChild(divRamo);
+        });
 
-  // Actualiza el set para la siguiente ronda
-  aprobados = aprobadosTemp;
-}
+        contenedor.appendChild(divSem);
+      });
+    }
 
-// Recalcular continuamente hasta que no cambie nada
-function calcularMalla() {
-  let lastCount = -1;
-  while (aprobados.size !== lastCount) {
-    lastCount = aprobados.size;
     renderMalla();
-  }
-}
-
-calcularMalla();
-</script>
-
+  </script>
 </body>
+</html>
+
 </html>
