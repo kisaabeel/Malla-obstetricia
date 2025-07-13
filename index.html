@@ -3,41 +3,67 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Malla Curricular Obstetricia</title>
+<title>Malla Curricular - Obstetricia</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+
 <style>
   body {
-    font-family: Arial, sans-serif;
+    font-family: 'Poppins', sans-serif;
+    background: #f0f4f8;
+    color: #222;
     max-width: 900px;
     margin: 20px auto;
-    background: #f5f5f5;
     padding: 20px;
-    color: #333;
   }
   h1, h2 {
     text-align: center;
+    font-weight: 700;
+    color: #0b3d91;
   }
   .semestre {
     background: white;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    padding: 15px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    margin-bottom: 25px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   }
   .ramo {
     cursor: pointer;
-    padding: 8px;
+    padding: 12px 16px;
     border-bottom: 1px solid #ddd;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+    transition: background-color 0.3s ease;
   }
   .ramo:hover {
-    background-color: #eef;
+    background-color: #e6f2ff;
+  }
+  .icono {
+    font-weight: 900;
+    font-size: 1.3em;
+    color: #0b3d91;
+    transition: transform 0.3s ease;
   }
   .detalles {
-    padding: 8px 16px;
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 16px;
     font-size: 0.9em;
     color: #555;
-    display: none;
-    background: #f9f9f9;
-    border-left: 3px solid #007ACC;
+    background: #f7fbff;
+    border-left: 4px solid #3a86ff;
+    border-radius: 0 12px 12px 0;
+    margin-bottom: 10px;
+    transition: max-height 0.4s ease, padding 0.4s ease;
+  }
+  .detalles.abierto {
+    padding: 10px 16px;
+    max-height: 200px; /* ajusta según contenido */
   }
 </style>
 </head>
@@ -45,25 +71,18 @@
 
 <h1>Malla Curricular - Obstetricia</h1>
 
-<div id="malla-container">
-
-</div>
+<div id="malla-container"></div>
 
 <script>
 const malla = [
-  {
-    semestre: 1,
-    ramos: [
+  { semestre: 1, ramos: [
       {nombre: "Inglés General", prereq: "Ninguno"},
       {nombre: "Biología Celular", prereq: "Ninguno"},
       {nombre: "Anatomía Humana", prereq: "Ninguno"},
       {nombre: "Química General y Orgánica", prereq: "Ninguno"},
       {nombre: "Fundamentos de la Matronería", prereq: "Ninguno"},
-    ]
-  },
-  {
-    semestre: 2,
-    ramos: [
+    ]},
+  { semestre: 2, ramos: [
       {nombre: "Estrategias para el Aprendizaje", prereq: "Ninguno"},
       {nombre: "Fisiología Humana", prereq: "Biología Celular, Anatomía Humana"},
       {nombre: "Histoembriología", prereq: "Biología Celular"},
@@ -72,11 +91,8 @@ const malla = [
       {nombre: "Fundamentos de la Salud Sexual y Reproductiva", prereq: "Fundamentos de la Matronería"},
       {nombre: "Psicología del Curso de la Vida", prereq: "Ninguno"},
       {nombre: "Atención en Salud Basada en Evidencia Científica", prereq: "Inglés General"},
-    ]
-  },
-  {
-    semestre: 3,
-    ramos: [
+    ]},
+  { semestre: 3, ramos: [
       {nombre: "Ética", prereq: "Antropología"},
       {nombre: "Embriología y Genética", prereq: "Histoembriología"},
       {nombre: "Microbiología General", prereq: "Biología Celular"},
@@ -85,11 +101,8 @@ const malla = [
       {nombre: "Anatomía Aplicada", prereq: "Anatomía Humana"},
       {nombre: "Género y Salud", prereq: "Antropología, Fundamentos de la Salud Sexual y Reproductiva"},
       {nombre: "Salud Pública I", prereq: "Ninguno"},
-    ]
-  },
-  {
-    semestre: 4,
-    ramos: [
+    ]},
+  { semestre: 4, ramos: [
       {nombre: "PAE I", prereq: "Anatomía Humana, Fisiología Humana, Microbiología General"},
       {nombre: "Obstetricia I", prereq: "Bioquímica General, Embriología y Genética, Anatomía Aplicada"},
       {nombre: "Neonatología I", prereq: "Bioquímica General, Embriología y Genética, Fisiología Humana"},
@@ -97,11 +110,8 @@ const malla = [
       {nombre: "Sexología I", prereq: "Psicología del Curso de la Vida, Género y Salud"},
       {nombre: "Promoción de la Salud", prereq: "Antropología, Psicología del Curso de la Vida, Género y Salud"},
       {nombre: "Fisiopatología", prereq: "Fisiología Humana"},
-    ]
-  },
-  {
-    semestre: 5,
-    ramos: [
+    ]},
+  { semestre: 5, ramos: [
       {nombre: "Electivo de Formación Integral", prereq: "Ética"},
       {nombre: "Obstetricia II", prereq: "Obstetricia I, Fisiopatología"},
       {nombre: "Neonatología II", prereq: "Neonatología I, Fisiopatología"},
@@ -110,11 +120,8 @@ const malla = [
       {nombre: "Salud Familiar", prereq: "Género y Salud, Promoción de la Salud"},
       {nombre: "Salud Pública II", prereq: "Salud Pública I"},
       {nombre: "Farmacología Perinatal y Ginecológica", prereq: "Farmacología General, Farmacología Aplicada"},
-    ]
-  },
-  {
-    semestre: 6,
-    ramos: [
+    ]},
+  { semestre: 6, ramos: [
       {nombre: "Integrado Urgencia Ginecológica, Obstétrica y Neonatal", prereq: "PAE II, Farmacología Perinatal y Ginecológica"},
       {nombre: "Preclínico Perinatal", prereq: "Obstetricia II, Neonatología II"},
       {nombre: "Regulación de la Fecundidad", prereq: "Género y Salud, Ginecología II, Farmacología Perinatal y Ginecológica"},
@@ -122,11 +129,8 @@ const malla = [
       {nombre: "Educación para la Salud", prereq: "Género y Salud, Salud Familiar"},
       {nombre: "Epidemiología para la Gestión", prereq: "Salud Pública II"},
       {nombre: "Introducción a la Biomedicina", prereq: "Ética, Fisiopatología, Atención en Salud Basada en Evidencia Científica"},
-    ]
-  },
-  {
-    semestre: 7,
-    ramos: [
+    ]},
+  { semestre: 7, ramos: [
       {nombre: "Electivo I", prereq: "Ninguno"},
       {nombre: "Preclínico de Atención Primaria", prereq: "Preclínico Perinatal, Regulación de la Fecundidad"},
       {nombre: "Clínico Perinatal I", prereq: "Preclínico Perinatal"},
@@ -134,11 +138,8 @@ const malla = [
       {nombre: "Investigación Científica", prereq: "Introducción a la Biomedicina"},
       {nombre: "Bioética", prereq: "Ética"},
       {nombre: "Gestión en Salud", prereq: "Epidemiología para la Gestión"},
-    ]
-  },
-  {
-    semestre: 8,
-    ramos: [
+    ]},
+  { semestre: 8, ramos: [
       {nombre: "Clínico de Atención Primaria", prereq: "Preclínico de Atención Primaria, Sexología II, Habilidades para la Vida Profesional"},
       {nombre: "Clínico Perinatal II", prereq: "Clínico Perinatal I, Habilidades para la Vida Profesional"},
       {nombre: "Clínico Morbilidad Ginecológica", prereq: "Integrado Urgencia Ginecológica, Obstétrica y Neonatal, Ginecología II, Habilidades para la Vida Profesional"},
@@ -147,11 +148,8 @@ const malla = [
       {nombre: "Marketing Social en Salud", prereq: "Educación para la Salud, Gestión en Salud"},
       {nombre: "Integrado Clínico I", prereq: "Clínico Perinatal II, Clínico Morbilidad Ginecológica, Clínico de Atención Primaria"},
       {nombre: "Habilidades para la Vida Profesional", prereq: "Bioética"},
-    ]
-  },
-  {
-    semestre: 9,
-    ramos: [
+    ]},
+  { semestre: 9, ramos: [
       {nombre: "Electivo II", prereq: "Aprobado hasta 8º semestre"},
       {nombre: "Clínico de Oncología Ginecológica", prereq: "Aprobado hasta 8º semestre"},
       {nombre: "Clínico de Control Sexual y Consejería", prereq: "Aprobado hasta 8º semestre"},
@@ -159,14 +157,10 @@ const malla = [
       {nombre: "Clínico de Salud Sexual y Reproductiva Infanto-Juvenil", prereq: "Aprobado hasta 8º semestre"},
       {nombre: "Clínico de Gestión en Matronería", prereq: "Aprobado hasta 8º semestre"},
       {nombre: "Integrado Clínico II", prereq: "Aprobado hasta 8º semestre"},
-    ]
-  },
-  {
-    semestre: 10,
-    ramos: [
+    ]},
+  { semestre: 10, ramos: [
       {nombre: "Clínico Intrahospitalario y Extrahospitalario", prereq: "Aprobado hasta 8º semestre"},
-    ]
-  }
+    ]},
 ];
 
 function construirMalla() {
@@ -181,14 +175,27 @@ function construirMalla() {
     sem.ramos.forEach(ramo => {
       const divRamo = document.createElement('div');
       divRamo.className = 'ramo';
-      divRamo.textContent = ramo.nombre;
 
+      // Crear texto nombre ramo
+      const nombreSpan = document.createElement('span');
+      nombreSpan.textContent = ramo.nombre;
+
+      // Crear icono
+      const icono = document.createElement('span');
+      icono.className = 'icono';
+      icono.textContent = '➕';
+
+      divRamo.appendChild(nombreSpan);
+      divRamo.appendChild(icono);
+
+      // Crear detalles prerrequisitos
       const detalles = document.createElement('div');
       detalles.className = 'detalles';
       detalles.textContent = `Prerrequisitos: ${ramo.prereq}`;
 
       divRamo.addEventListener('click', () => {
-        detalles.style.display = detalles.style.display === 'block' ? 'none' : 'block';
+        const abierto = detalles.classList.toggle('abierto');
+        icono.textContent = abierto ? '➖' : '➕';
       });
 
       divSemestre.appendChild(divRamo);
