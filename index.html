@@ -11,59 +11,71 @@
   body {
     font-family: 'Poppins', sans-serif;
     background: #5a2a82; /* morado oscuro */
-    color: #f3e6ff; /* texto claro para contraste */
+    color: #f3e6ff; /* texto claro */
     max-width: 95vw;
-    margin: 20px auto;
-    padding: 20px;
+    margin: 15px auto;
+    padding: 15px;
   }
   h1 {
     text-align: center;
     font-weight: 700;
-    color: #f48fb1; /* rosado claro para el título */
-    margin-bottom: 30px;
+    color: #f48fb1; /* rosado */
+    margin-bottom: 20px;
+    font-size: 1.8rem;
   }
   #malla-container {
     display: flex;
-    gap: 20px;
+    gap: 10px;
     overflow-x: auto;
     padding-bottom: 10px;
     scroll-behavior: smooth;
-    height: 90vh; /* limita la altura total */
+    height: 90vh;
     align-items: flex-start;
   }
   .semestre {
-    flex: 0 0 280px; /* ancho fijo para que se vea en fila */
+    flex: 0 0 230px; /* más estrecho */
     max-height: 100%;
-    overflow-y: auto; /* scroll vertical dentro del semestre */
-    background: #f3e6ff; /* rosado muy suave para la caja del semestre */
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 4px 12px rgba(180, 100, 140, 0.5);
-    color: #5a2a82; /* texto morado oscuro dentro */
+    overflow-y: auto;
+    background: #f3e6ff;
+    border-radius: 10px;
+    padding: 12px 15px;
+    box-shadow: 0 3px 8px rgba(180, 100, 140, 0.4);
+    color: #5a2a82;
   }
   .semestre h2 {
     text-align: center;
     margin-top: 0;
-    margin-bottom: 15px;
-    color: #720026; /* morado oscuro para títulos de semestre */
+    margin-bottom: 10px;
+    color: #720026;
+    font-size: 1.2rem;
   }
   .ramo {
-    font-size: 14px;          /* texto más pequeño */
-    padding: 8px 12px;        /* menos espacio interno */
+    font-size: 12px; /* más pequeño */
+    padding: 5px 8px; /* menos padding */
     border-bottom: 1px solid #e8d7f1;
     display: flex;
     align-items: center;
-    border-radius: 8px;
-    background: #f8bbd0;       /* rosado suave para ramos desbloqueados */
+    border-radius: 6px;
+    background: #f8bbd0;
     transition: background-color 0.3s ease;
+    margin-bottom: 4px; /* menos espacio entre ramos */
   }
   .ramo.bloqueado {
-    background: white; /* fondo blanco para bloqueados */
+    background: white;
     opacity: 1;
   }
   .nombre-prereq {
-    margin-left: 8px;
+    margin-left: 6px;
     font-weight: 600;
+    cursor: pointer;
+  }
+  .tachado {
+    text-decoration: line-through;
+    color: #8a2b5d;
+  }
+  input[type="checkbox"] {
+    width: 14px;
+    height: 14px;
     cursor: pointer;
   }
 </style>
@@ -74,7 +86,6 @@
 <div id="malla-container"></div>
 
 <script>
-// Datos de la malla con prerrequisitos como array
 const malla = [
   { semestre: 1, ramos: [
       {nombre: "Inglés General", prereq: []},
@@ -164,24 +175,18 @@ const malla = [
     ]},
 ];
 
-// Para guardar/aplicar estados con localStorage
 const STORAGE_KEY = 'mallaObstetriciaEstado';
-
-// Carga estado aprobado desde localStorage o vacio
 let estadoAprobados = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
 
-// Función para guardar estado
 function guardarEstado() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(estadoAprobados));
 }
 
-// Revisa si todos los prerrequisitos están aprobados
 function prerrequisitosAprobados(prereqs) {
-  if (prereqs.length === 0) return true; // sin prerrequisitos, siempre desbloqueado
+  if (prereqs.length === 0) return true;
   return prereqs.every(nombre => estadoAprobados[nombre] === true);
 }
 
-// Construir la malla y controlar habilitación
 function construirMalla() {
   const contenedor = document.getElementById('malla-container');
   contenedor.innerHTML = '';
@@ -198,25 +203,27 @@ function construirMalla() {
       const divRamo = document.createElement('div');
       divRamo.className = 'ramo';
 
-      // Checkbox para marcar aprobado
       const checkbox = document.createElement('input');
       checkbox.type = 'checkbox';
       checkbox.id = `chk-${sem.semestre}-${ramo.nombre}`;
       checkbox.disabled = !prerrequisitosAprobados(ramo.prereq);
       checkbox.checked = !!estadoAprobados[ramo.nombre];
 
-      // Label para el checkbox con nombre y clic para togglear
       const label = document.createElement('label');
       label.htmlFor = checkbox.id;
       label.className = 'nombre-prereq';
       label.textContent = ramo.nombre;
 
-      // Aplicar clase "bloqueado" si está deshabilitado
       if (checkbox.disabled) {
         divRamo.classList.add('bloqueado');
       }
 
-      // Al hacer clic en checkbox, actualizar estado y reconstruir para refrescar habilitados
+      if (checkbox.checked) {
+        label.classList.add('tachado');
+      } else {
+        label.classList.remove('tachado');
+      }
+
       checkbox.addEventListener('change', () => {
         estadoAprobados[ramo.nombre] = checkbox.checked;
         guardarEstado();
@@ -232,7 +239,6 @@ function construirMalla() {
   });
 }
 
-// Al cargar página construir malla
 construirMalla();
 </script>
 
