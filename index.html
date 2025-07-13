@@ -28,28 +28,29 @@
     overflow-x: auto;
     padding-bottom: 10px;
     scroll-behavior: smooth;
+    height: 90vh; /* limita la altura total */
+    align-items: flex-start;
   }
   .semestre {
+    flex: 0 0 280px; /* ancho fijo para que se vea en fila */
+    max-height: 100%;
+    overflow-y: auto; /* scroll vertical dentro del semestre */
     background: #f3e6ff; /* rosado muy suave para la caja del semestre */
     border-radius: 12px;
     padding: 20px;
     box-shadow: 0 4px 12px rgba(180, 100, 140, 0.5);
-    flex: 0 0 300px;
-    min-width: 280px;
-    max-height: 90vh;
-    overflow-y: auto;
     color: #5a2a82; /* texto morado oscuro dentro */
   }
   .semestre h2 {
     text-align: center;
     margin-top: 0;
     margin-bottom: 15px;
-    color: #720026; /* un morado más oscuro para los títulos de semestre */
+    color: #720026; /* morado oscuro para títulos de semestre */
   }
   .ramo {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     padding: 12px 16px;
     border-bottom: 1px solid #e8d7f1;
     user-select: none;
@@ -59,22 +60,12 @@
   }
   .ramo.bloqueado {
     background: white; /* fondo blanco para bloqueados */
-    opacity: 1; /* sin transparencia */
+    opacity: 1;
   }
   .nombre-prereq {
-    flex-grow: 1;
     margin-left: 10px;
     font-weight: 600;
     cursor: pointer;
-  }
-  .prerequisitos {
-    font-size: 0.9em;
-    color: #720026;
-    background: #fce4ec;
-    border-left: 4px solid #b5179e;
-    border-radius: 0 12px 12px 0;
-    margin-top: 5px;
-    padding: 10px 16px;
   }
 </style>
 </head>
@@ -221,11 +212,6 @@ function construirMalla() {
       label.className = 'nombre-prereq';
       label.textContent = ramo.nombre;
 
-      // Div para prerrequisitos
-      const prereqDiv = document.createElement('div');
-      prereqDiv.className = 'prerequisitos';
-      prereqDiv.textContent = 'Prerrequisitos: ' + (ramo.prereq.length > 0 ? ramo.prereq.join(', ') : 'Ninguno');
-
       // Aplicar clase "bloqueado" si está deshabilitado
       if (checkbox.disabled) {
         divRamo.classList.add('bloqueado');
@@ -241,7 +227,6 @@ function construirMalla() {
       divRamo.appendChild(checkbox);
       divRamo.appendChild(label);
       divSemestre.appendChild(divRamo);
-      divSemestre.appendChild(prereqDiv);
     });
 
     contenedor.appendChild(divSemestre);
